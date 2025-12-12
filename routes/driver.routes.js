@@ -1,7 +1,8 @@
-const express = require("express");
-const { registerDriver } = require("../controllers/driver.controller");
+import express from "express";
+import { registerDriver } from "../controllers/driver.controller.js";
+
 const router = express.Router();
 
 router.post("/register", registerDriver);
 
-module.exports = router;
+export default router;

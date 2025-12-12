@@ -1,16 +1,16 @@
-const mongoose = require("mongoose");
-
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    firebaseUid: { type: String },   // IMPORTANT for Firebase login
+    firebaseUid: { type: String }, // For Firebase login
 
     name: { type: String, trim: true },
-    phone: { type: String, unique: true, sparse: true }, // admin can have no phone
+
+    phone: { type: String, unique: true, sparse: true }, // Admin may not have phone
 
     role: {
       type: String,
-      enum: ['RESTAURANT', 'DRIVER', 'ADMIN'],
+      enum: ["RESTAURANT", "DRIVER", "ADMIN"],
       required: true,
     },
 
@@ -21,9 +21,11 @@ const userSchema = new mongoose.Schema(
 
     // Relationship Links
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
-    driverId: { type: mongoose.Schema.Types.ObjectId, ref: "Driver" }
+    driverId: { type: mongoose.Schema.Types.ObjectId, ref: "Driver" },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+export default User;

@@ -1,7 +1,7 @@
-const User = require("../models/User");
-const Restaurant = require("../models/Restaurant");
+import User from "../models/User.js";
+import Restaurant from "../models/Restaurant.js";
 
-exports.registerRestaurant = async (req, res) => {
+export const registerRestaurant = async (req, res) => {
   try {
     const {
       firebaseUid,
@@ -21,7 +21,7 @@ exports.registerRestaurant = async (req, res) => {
         firebaseUid,
         phone,
         name,
-        role: "RESTAURANT_OWNER",
+        role: "RESTAURANT",
         isVerified: true,
       });
     }

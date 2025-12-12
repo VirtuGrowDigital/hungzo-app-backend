@@ -1,7 +1,7 @@
-const User = require("../models/User");
-const Driver = require("../models/Driver");
+import User from "../models/User.js";
+import Driver from "../models/Driver.js";
 
-exports.registerDriver = async (req, res) => {
+export const registerDriver = async (req, res) => {
   try {
     const {
       firebaseUid,

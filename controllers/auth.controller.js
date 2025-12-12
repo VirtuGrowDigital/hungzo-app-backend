@@ -1,19 +1,21 @@
-const User = require("../models/User");
+import User from "../models/User.js";
+import admin from "../config/firebase.js";
 
-// MOCK LOGIN FOR POSTMAN 
-// No Firebase required — user sends firebaseUid + phone manually
-
-exports.mockLogin = async (req, res) => {
+export const firebaseLogin = async (req, res) => {
   try {
-    const { firebaseUid, phone, role } = req.body;
+    const { idToken, role } = req.body;
 
-    if (!firebaseUid || !phone || !role) {
-      return res.status(400).json({ message: "firebaseUid, phone, role required" });
-    }
+    // 1. Verify token
+    const decoded = await admin.auth().verifyIdToken(idToken);
 
+    const firebaseUid = decoded.uid;
+    const phone = decoded.phone_number;
+
+    // 2. Check if user exists
     let user = await User.findOne({ firebaseUid });
 
     if (!user) {
+      // New user → requires registration
       return res.json({
         status: "NEW_USER",
         firebaseUid,
@@ -22,13 +24,13 @@ exports.mockLogin = async (req, res) => {
       });
     }
 
-    // Existing user
+    // 3. Existing user → return info
     return res.json({
       status: "EXISTING_USER",
       user
     });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(400).json({ error: err.message });
   }
 };

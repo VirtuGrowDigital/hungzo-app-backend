@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const addressSchema = new mongoose.Schema(
   {
@@ -38,9 +38,11 @@ const restaurantSchema = new mongoose.Schema(
       default: "PENDING",
     },
 
-    isActive: { type: Boolean, default: true }, // visible on app
+    isActive: { type: Boolean, default: true },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Restaurant", restaurantSchema);
+const Restaurant = mongoose.model("Restaurant", restaurantSchema);
+
+export default Restaurant;

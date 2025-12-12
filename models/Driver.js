@@ -1,10 +1,15 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const driverSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 
-    vehicleType: { type: String, enum: ["BIKE", "SCOOTY", "PICKUP"], default: "BIKE" },
+    vehicleType: {
+      type: String,
+      enum: ["BIKE", "SCOOTY", "PICKUP"],
+      default: "BIKE",
+    },
+
     licenseNumber: String,
     vehicleNumber: String,
 
@@ -14,8 +19,8 @@ const driverSchema = new mongoose.Schema(
       default: "PENDING",
     },
 
-    isActive: { type: Boolean, default: false }, // active = working
-    isOnline: { type: Boolean, default: false }, // online = available for orders
+    isActive: { type: Boolean, default: false }, 
+    isOnline: { type: Boolean, default: false }, 
 
     currentLocation: {
       lat: Number,
@@ -27,4 +32,6 @@ const driverSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Driver", driverSchema);
+const Driver = mongoose.model("Driver", driverSchema);
+
+export default Driver;
