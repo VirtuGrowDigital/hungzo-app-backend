@@ -7,11 +7,22 @@ import { ensureDefaultAdmin } from "./utils/ensureDefaultAdmin.js";
 
 const PORT = process.env.PORT || 5000;
 
-// Connect DB → then start server
-connectDB();
+const startServer = async () => {
+  try {
+    // 1. Connect to MongoDB
+    await connectDB();
 
-await ensureDefaultAdmin();
+    // 2. Create default admin (runs only once)
+    await ensureDefaultAdmin();
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+    // 3. Start Express server
+    app.listen(PORT, () => {
+      console.log(`🚀 Hungzo Backend Running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("❌ Server Startup Error:", err);
+    process.exit(1); // Stop process so nodemon restarts
+  }
+};
+
+startServer();
