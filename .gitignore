@@ -2,3 +2,7 @@ node_modules
 *.json
 .env
 firebase-*.json
+*adminsdk*.json
+config/*firebase*.json
+*.env
+
