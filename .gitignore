@@ -5,4 +5,4 @@ firebase-*.json
 *adminsdk*.json
 config/*firebase*.json
 *.env
-
+config/hangzo-app-firebase-adminsdk-fbsvc-33f1c345ed.json
