@@ -3,23 +3,33 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Support __dirname in ES Modules
+// Enable __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Correct path to the JSON file (located in project root)
+
 const serviceAccountPath = path.join(
   __dirname,
-  "/hangzo-app-firebase-adminsdk-fbsvc-33f1c345ed.json"
+  "hangzo-app-firebase-adminsdk-fbsvc-33f1c345ed.json"
 );
 
-// Read the JSON safely
-const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf-8"));
+// Safety check
+if (!fs.existsSync(serviceAccountPath)) {
+  throw new Error("❌ Firebase service account JSON not found at root");
+}
 
+// Load credentials
+const serviceAccount = JSON.parse(
+  fs.readFileSync(serviceAccountPath, "utf-8")
+);
+
+// Prevent double initialization
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
   });
+
+  console.log("🔥 Firebase Admin Initialized Successfully");
 }
 
 export default admin;
