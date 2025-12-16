@@ -67,9 +67,22 @@ export const registerRestaurant = async (req, res) => {
       });
     }
 
+     // 🚫 Role lock
+     if (user.role !== "RESTAURANT") {
+      return res.status(403).json({
+        message: `This account is registered as ${user.role}`,
+      });
+    }
+
+    // 🚫 Prevent duplicate restaurant
     if (user.restaurantId) {
       return res.status(400).json({ message: "Restaurant already registered" });
     }
+
+    // ✅ Update phone/name if changed
+    if (phone && user.phone !== phone) user.phone = phone;
+    if (name && user.name !== name) user.name = name;
+    await user.save();
 
     const restaurant = await Restaurant.create({
       owner: user._id,

@@ -65,9 +65,22 @@ export const registerDriver = async (req, res) => {
       });
     }
 
+    // 🚫 Role lock
+    if (user.role !== "DRIVER") {
+      return res.status(403).json({
+        message: `This account is registered as ${user.role}`,
+      });
+    }
+
+    // 🚫 Prevent duplicate registration
     if (user.driverId) {
       return res.status(400).json({ message: "Driver already registered" });
     }
+
+    // ✅ Update phone/name if changed
+    if (phone && user.phone !== phone) user.phone = phone;
+    if (name && user.name !== name) user.name = name;
+    await user.save();
 
     const driver = await Driver.create({
       user: user._id,

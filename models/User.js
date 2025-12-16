@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    firebaseUid: { type: String }, // For Firebase login
+    firebaseUid: { type: String, unique: true }, // For Firebase login
 
     name: { type: String, trim: true },
 
@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["RESTAURANT", "DRIVER", "ADMIN"],
+      enum: ["SUPERADMIN", "ADMIN", "RESTAURANT", "DRIVER"],
       required: true,
     },
 
@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema(
     fcmTokens: { type: [String], default: [] },
 
     // Relationship Links
+    // supplierId: { type: mongoose.Schema.Types.ObjectId, ref: "Supplier" },
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
     driverId: { type: mongoose.Schema.Types.ObjectId, ref: "Driver" },
   },

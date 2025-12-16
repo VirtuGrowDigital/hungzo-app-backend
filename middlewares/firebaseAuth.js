@@ -35,6 +35,10 @@ const firebaseAuthMiddleware = async (req, res, next) => {
         uid: req.body.firebaseUid || "mock_firebase_uid_123",
         phone_number: req.body.phone || "9999999999",
         name: req.body.name || "Mock User",
+
+        // uid: "mock_firebase_uid_123", // 🔥 ALWAYS FIXED
+        // phone_number: "9999999999",
+        // name: "Mock User",
       };
       return next();
     }
