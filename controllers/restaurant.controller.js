@@ -108,14 +108,6 @@ export const registerRestaurant = async (req, res) => {
 
 
 // =====================================================
-// ADMIN: GET PENDING RESTAURANTS
-// =====================================================
-export const getPendingRestaurants = async (req, res) => {
-  const list = await Restaurant.find({ verificationStatus: "PENDING" }).populate("owner");
-  res.json(list);
-};
-
-// =====================================================
 // APPROVE RESTAURANT
 // =====================================================
 export const approveRestaurant = async (req, res) => {

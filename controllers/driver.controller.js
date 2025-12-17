@@ -103,14 +103,6 @@ export const registerDriver = async (req, res) => {
 };
 
 
-
-// ADMIN: GET PENDING DRIVERS
-// =====================================================
-export const getPendingDrivers = async (req, res) => {
-  const list = await Driver.find({ verificationStatus: "PENDING" }).populate("user");
-  res.json(list);
-};
-
 // =====================================================
 // APPROVE DRIVER
 // =====================================================

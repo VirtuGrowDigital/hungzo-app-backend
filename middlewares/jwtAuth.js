@@ -1,23 +1,36 @@
 import jwt from "jsonwebtoken";
 
-
 export const protect = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
+  const authHeader = req.headers.authorization;
 
-  if (!token) return res.status(401).json({ msg: "Missing Access Token" });
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ msg: "Missing Access Token" });
+  }
+
+  const token = authHeader.split(" ")[1];
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-    req.user = decoded; // contains { id, role }
+
+    // 🔥 Normalize payload
+    req.user = {
+      id: decoded.id || decoded._id,
+      role: decoded.role,
+    };
+
     next();
   } catch (err) {
-    res.status(401).json({ msg: "Invalid or Expired Access Token" });
+    return res.status(401).json({ msg: "Invalid or Expired Access Token" });
   }
 };
 
-export const requireRole = (role) => {
+/**
+ * Allow MULTIPLE roles
+ */
+export const requireRole = (...roles) => {
   return (req, res, next) => {
-    if (req.user.role !== role) {
+    console.log("ROLE:", req.user.role, "ALLOWED:", roles, "URL:", req.originalUrl);
+    if (!roles.includes(req.user.role)) {
       return res.status(403).json({ msg: "Forbidden: Role Not Allowed" });
     }
     next();
