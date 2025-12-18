@@ -7,7 +7,7 @@ export const verifiedRestaurants = async (req, res) => {
   const list = await User.find({
     role: "RESTAURANT",
     isVerified: true,
-  });
+  }).populate("owner");
   res.json(list);
 };
 
@@ -16,7 +16,7 @@ export const verifiedDrivers = async (req, res) => {
   const list = await User.find({
     role: "DRIVER",
     isVerified: true,
-  });
+  }).populate("user");
   res.json(list);
 };
 

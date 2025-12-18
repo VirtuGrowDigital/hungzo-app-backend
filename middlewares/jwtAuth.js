@@ -29,7 +29,7 @@ export const protect = (req, res, next) => {
  */
 export const requireRole = (...roles) => {
   return (req, res, next) => {
-    console.log("ROLE:", req.user.role, "ALLOWED:", roles, "URL:", req.originalUrl);
+    // console.log("ROLE:", req.user.role, "ALLOWED:", roles, "URL:", req.originalUrl);
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({ msg: "Forbidden: Role Not Allowed" });
     }

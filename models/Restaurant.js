@@ -2,12 +2,12 @@ import mongoose from "mongoose";
 
 const addressSchema = new mongoose.Schema(
   {
-    label: String,
+    label: { type: String, required: true },
     line1: String,
     line2: String,
-    city: String,
-    state: String,
-    pincode: String,
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    pincode: { type: String, required: true },
     location: {
       lat: Number,
       lng: Number,
@@ -19,11 +19,17 @@ const addressSchema = new mongoose.Schema(
 const restaurantSchema = new mongoose.Schema(
   {
     owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    ownerName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    profilePic: { type: String },
 
     name: { type: String, required: true },
 
-    gst: String,
-    fssai: String,
+    gst: { type: String },
+    fssai: { type: String },
 
     docs: {
       gstDocUrl: String,

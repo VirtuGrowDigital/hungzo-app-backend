@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema(
     fcmTokens: { type: [String], default: [] },
 
     // Relationship Links
-    // supplierId: { type: mongoose.Schema.Types.ObjectId, ref: "Supplier" },
     restaurantId: { type: mongoose.Schema.Types.ObjectId, ref: "Restaurant" },
     driverId: { type: mongoose.Schema.Types.ObjectId, ref: "Driver" },
   },
