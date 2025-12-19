@@ -4,19 +4,13 @@ import User from "../models/User.js";
 
 // VERIFIED RESTAURANTS
 export const verifiedRestaurants = async (req, res) => {
-  const list = await User.find({
-    role: "RESTAURANT",
-    isVerified: true,
-  }).populate("owner");
+  const list = await Restaurant.find({ verificationStatus: "APPROVED" }).populate("owner");
   res.json(list);
 };
 
 // VERIFIED DRIVERS
 export const verifiedDrivers = async (req, res) => {
-  const list = await User.find({
-    role: "DRIVER",
-    isVerified: true,
-  }).populate("user");
+  const list = await Driver.find({ verificationStatus: "APPROVED" }).populate("user");
   res.json(list);
 };
 

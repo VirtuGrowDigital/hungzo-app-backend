@@ -103,9 +103,9 @@ export const registerDriver = async (req, res) => {
 };
 
 
-// =====================================================
+
 // APPROVE DRIVER
-// =====================================================
+
 export const approveDriver = async (req, res) => {
   const driver = await Driver.findByIdAndUpdate(
     req.params.id,
@@ -118,9 +118,9 @@ export const approveDriver = async (req, res) => {
   res.json({ msg: "Driver Approved", driver });
 };
 
-// =====================================================
+
 // REJECT DRIVER
-// =====================================================
+
 export const rejectDriver = async (req, res) => {
   const driver = await Driver.findByIdAndUpdate(
     req.params.id,
