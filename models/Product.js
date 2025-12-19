@@ -1,23 +1,56 @@
 import mongoose from "mongoose";
 
+const varietySchema = new mongoose.Schema({
+  name: { type: String, required: true }, // e.g., Single, Double, Cheese
+  price: { type: Number, required: true },
+  isAvailable: { type: Boolean, default: true },
+});
+
 const productSchema = new mongoose.Schema(
   {
-    admin: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Admin", // 🔥 supplier = admin
-      required: true,
+    name: {
+      type: String,
+      required: true
     },
-
-    name: { type: String, required: true },
-    category: String,
-
-    price: { type: Number, required: true },
-    unit: { type: String, enum: ["KG", "LITER", "PACK"], required: true },
-
-    stock: { type: Number, default: 0 },
-    isActive: { type: Boolean, default: true },
+    description: {
+      type: String
+    },
+    // price: {
+    //   type: Number,
+    //   required: true
+    // },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true
+    },
+    images: [{
+      type: String
+    }], 
+    stock: {
+      type: String,
+      default: " "
+    },
+    status: {
+      type: String,
+      enum: ["available", "not available"],
+      default: "available"
+    },
+    isActive: {
+      type: Boolean,
+      default: true
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin"
+    },
+    varieties: [varietySchema],
   },
   { timestamps: true }
 );
+
+productSchema.index({ createdBy: 1 });
+productSchema.index({ category: 1 });
+
 
 export default mongoose.model("Product", productSchema);
