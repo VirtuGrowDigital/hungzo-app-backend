@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename);
 
 const serviceAccountPath = path.join(
   __dirname,
-  "hangzo-app-firebase-adminsdk-fbsvc-33f1c345ed.json"
+  "hangzo-app-3ea24-firebase-adminsdk-fbsvc-76f456c4d7.json"
 );
 
 // Safety check

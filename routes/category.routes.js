@@ -1,0 +1,22 @@
+import express from "express";
+import {
+  createCategory,
+  deleteCategory,
+  getProductsByCategory,
+  getAllCategories,
+} from "../controllers/category.controller.js";
+import { protect, requireRole } from "../middlewares/jwtAuth.js";
+
+
+const router = express.Router();
+
+router.get("/menu", getProductsByCategory);
+
+router.use(protect);
+router.use(requireRole("ADMIN", "SUPERADMIN"));
+
+router.post("/create", createCategory);
+router.get("/all", getAllCategories);
+router.delete("/delete/:id", deleteCategory);
+
+export default router;
