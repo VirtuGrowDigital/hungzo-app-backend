@@ -32,6 +32,11 @@ const driverSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+driverSchema.index({ user: 1 });
+driverSchema.index({ verificationStatus: 1 });
+driverSchema.index({ isOnline: 1, isActive: 1 });
+
+
 const Driver = mongoose.model("Driver", driverSchema);
 
 export default Driver;

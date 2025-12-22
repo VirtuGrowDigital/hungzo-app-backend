@@ -49,6 +49,10 @@ const restaurantSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+restaurantSchema.index({ user: 1 });
+restaurantSchema.index({ verificationStatus: 1 });
+restaurantSchema.index({ isActive: 1 });
+
 const Restaurant = mongoose.model("Restaurant", restaurantSchema);
 
 export default Restaurant;

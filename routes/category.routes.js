@@ -4,13 +4,16 @@ import {
   deleteCategory,
   getProductsByCategory,
   getAllCategories,
+  getMenu,
 } from "../controllers/category.controller.js";
 import { protect, requireRole } from "../middlewares/jwtAuth.js";
 
 
 const router = express.Router();
 
-router.get("/menu", getProductsByCategory);
+// for users 
+router.get("/menu", getMenu);
+router.get("/products/:categoryId", getProductsByCategory);
 
 router.use(protect);
 router.use(requireRole("ADMIN", "SUPERADMIN"));

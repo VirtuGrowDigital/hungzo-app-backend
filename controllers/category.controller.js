@@ -49,29 +49,118 @@ export const deleteCategory = async (req, res) => {
 };
 
 
+// GET MENU (PUBLIC)
+export const getMenu = async (req, res) => {
+  try {
+    const menu = await Category.aggregate([
+      { $match: { isActive: true } },
+      {
+        $lookup: {
+          from: "products",
+          let: { categoryId: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ["$category", "$$categoryId"] },
+                    { $eq: ["$isActive", true] },
+                    { $eq: ["$status", "available"] }
+                  ]
+                }
+              }
+            },
+            {
+              $project: {
+                name: 1,
+                description: 1,
+                images: 1,
+                // basePrice: 1,
+                varieties: {
+                  $filter: {
+                    input: "$varieties",
+                    as: "v",
+                    cond: { $eq: ["$$v.isAvailable", true] }
+                  }
+                }
+              }
+            },
+            { $sort: { createdAt: -1 } }
+          ],
+          as: "products"
+        }
+      },
+      { $match: { "products.0": { $exists: true } } },
+      {
+        $project: {
+          _id: 1,
+          category: "$name",
+          products: 1
+        }
+      }
+    ]);
+
+    res.json({
+      success: true,
+      menu
+    });
+  } catch (error) {
+    console.error("Get Menu Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error"
+    });
+  }
+};
+
+
+
 
 // Get Products Grouped by Category (for users)
+// export const getProductsByCategory = async (req, res) => {
+//   try {
+//     const categories = await Category.find({ isActive: true });
+//     const menu = [];
+
+//     for (const cat of categories) {
+//       const items = await Product.find({
+//         category: cat._id,
+//         isActive: true,
+//         status: "available",
+//       }).select("name description varieties images basePrice");
+
+//       menu.push({
+//         category: cat.name,
+//         items,
+//       });
+//     }
+
+//     res.json({ success: true, menu });
+//   } catch (error) {
+//     console.error("Get Products By Category Error:", error);
+//     res.status(500).json({ success: false, message: "Server Error", error });
+//   }
+// };
+
+// CATEGORY PAGE (PUBLIC)
 export const getProductsByCategory = async (req, res) => {
   try {
-    const categories = await Category.find({ isActive: true });
-    const menu = [];
+    const { categoryId } = req.params;
 
-    for (const cat of categories) {
-      const items = await Product.find({
-        category: cat._id,
-        isActive: true,
-        status: "available",
-      }).select("name description varieties images basePrice");
+    const products = await Product.find({
+      category: categoryId,
+      isActive: true,
+      status: "available"
+    })
+      .select("name description images varieties basePrice")
+      .sort({ createdAt: -1 });
 
-      menu.push({
-        category: cat.name,
-        items,
-      });
-    }
-
-    res.json({ success: true, menu });
+    res.json({
+      success: true,
+      count: products.length,
+      products
+    });
   } catch (error) {
-    console.error("Get Products By Category Error:", error);
-    res.status(500).json({ success: false, message: "Server Error", error });
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
