@@ -44,12 +44,13 @@ export const myProducts = async (req, res) => {
     const filter =
       req.user.role === "SUPERADMIN"
         ? {}
-        : { admin: req.user.id };
+        : { createdBy: req.user.id };
 
     const products = await Product.find(filter)
       .populate("createdBy", "username role")
       .sort({ createdAt: -1 });
-    res.json(products);
+      res.json({ success: true, products });
+
   } catch (error) {
     console.error("Get Product Error:", error);
     res.status(500).json({ success: false, message: "Server Error" });
@@ -106,7 +107,7 @@ export const deleteProduct = async (req, res) => {
     const query =
       req.user.role === "SUPERADMIN"
         ? { _id: id }
-        : { _id: id, admin: req.user.id };
+        : { _id: id, createdBy: req.user.id };
 
     const product = await Product.findOne(query);
     if (!product) {

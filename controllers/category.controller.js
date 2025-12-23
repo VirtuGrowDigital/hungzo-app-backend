@@ -13,7 +13,7 @@ export const createCategory = async (req, res) => {
 
     const category = await Category.create({
       name: name.trim().toUpperCase(),
-      createdBy: req.admin?._id
+      createdBy: req.user?._id
     });
 
     res.status(201).json({ success: true, message: "Category created", category });
@@ -152,7 +152,7 @@ export const getProductsByCategory = async (req, res) => {
       isActive: true,
       status: "available"
     })
-      .select("name description images varieties basePrice")
+      .select("name description images varieties")
       .sort({ createdAt: -1 });
 
     res.json({

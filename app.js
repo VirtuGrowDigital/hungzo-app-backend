@@ -10,6 +10,7 @@ import driverRoutes from "./routes/driver.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import categoriesRoutes from "./routes/category.routes.js";
 import productRoutes from "./routes/product.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import adminDashboardRoutes from "./routes/admin.dashboard.routes.js";
 
@@ -35,6 +36,7 @@ app.use("/admin/dashboard", adminDashboardRoutes);
 app.use("/admin", adminRoutes);
 app.use("/categories", categoriesRoutes)
 app.use("/products", productRoutes);
+app.use("/cart", cartRoutes);
 app.use("/orders", orderRoutes);
 
 export default app;
