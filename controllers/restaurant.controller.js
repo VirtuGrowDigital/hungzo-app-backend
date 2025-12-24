@@ -1,61 +1,6 @@
 import User from "../models/User.js";
 import Restaurant from "../models/Restaurant.js";
 
-// export const registerRestaurant = async (req, res) => {
-//   try {
-//     const firebaseUid = req.firebaseUser.uid;
-//     const { phone, name, restaurantName, gst, fssai, address } = req.body;
-
-//     let user = await User.findOne({ firebaseUid });
-
-//     if (!user) {
-//       user = await User.create({
-//         firebaseUid,
-//         phone,
-//         name,
-//         role: "RESTAURANT",
-//         isVerified: false,
-//       });
-//     }
-
-//      // Role lock
-//      if (user.role !== "RESTAURANT") {
-//       return res.status(403).json({
-//         message: `This account is registered as ${user.role}`,
-//       });
-//     }
-
-//     // Prevent duplicate restaurant
-//     if (user.restaurantId) {
-//       return res.status(400).json({ message: "Restaurant already registered" });
-//     }
-
-//     // ✅ Update phone/name if changed
-//     if (phone && user.phone !== phone) user.phone = phone;
-//     if (name && user.name !== name) user.name = name;
-//     await user.save();
-
-//     const restaurant = await Restaurant.create({
-//       owner: user._id,
-//       name: restaurantName,
-//       gst,
-//       fssai,
-//       addresses: [address],
-//     });
-
-//     user.restaurantId = restaurant._id;
-//     await user.save();
-
-//     res.json({
-//       message: "Restaurant registered",
-//       status: restaurant.verificationStatus,
-//       restaurant,
-//     });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// };
-
 
 // Register Restaurent
 

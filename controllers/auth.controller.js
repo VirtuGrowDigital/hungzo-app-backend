@@ -82,7 +82,7 @@ export const firebaseLogin = async (req, res) => {
       user = await User.create({
         firebaseUid: fb.firebaseUid,
         phone: fb.phone,
-        name: fb.name,
+        // name: fb.name,
         role,
         isVerified: false, // admin approval required
       });

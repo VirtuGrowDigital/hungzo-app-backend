@@ -115,33 +115,7 @@ export const getMenu = async (req, res) => {
 
 
 
-
 // Get Products Grouped by Category (for users)
-// export const getProductsByCategory = async (req, res) => {
-//   try {
-//     const categories = await Category.find({ isActive: true });
-//     const menu = [];
-
-//     for (const cat of categories) {
-//       const items = await Product.find({
-//         category: cat._id,
-//         isActive: true,
-//         status: "available",
-//       }).select("name description varieties images basePrice");
-
-//       menu.push({
-//         category: cat.name,
-//         items,
-//       });
-//     }
-
-//     res.json({ success: true, menu });
-//   } catch (error) {
-//     console.error("Get Products By Category Error:", error);
-//     res.status(500).json({ success: false, message: "Server Error", error });
-//   }
-// };
-
 // CATEGORY PAGE (PUBLIC)
 export const getProductsByCategory = async (req, res) => {
   try {
