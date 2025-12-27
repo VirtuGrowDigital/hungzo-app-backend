@@ -11,9 +11,12 @@
 import express from "express";
 import {
   registerRestaurant,
+  updateRestaurantProfile,
 } from "../controllers/restaurant.controller.js";
 
 import { protect, requireRole } from "../middlewares/jwtAuth.js";
+import restaurantProfileUpload from "../middlewares/restaurantProfileUpload.js";
+import { compressImage, memoryUpload } from "../middlewares/imageCompress.js";
 
 
 const router = express.Router();
@@ -24,11 +27,14 @@ router.use(requireRole("RESTAURANT"));
 
 
 // Restaurant registration
-router.post("/register", registerRestaurant);
+router.post("/register", compressImage, restaurantProfileUpload.single("profilePic"), registerRestaurant);
+
+// update profile
+router.put("/profile", compressImage, restaurantProfileUpload.single("profilePic"), updateRestaurantProfile);
 
 //Self protected route:
-router.get("/profile", (req, res) => {
-  res.json({ msg: "Restaurant profile", user: req.user });
-});
+// router.get("/profile", (req, res) => {
+//   res.json({ msg: "Restaurant profile", user: req.user });
+// });
 
 export default router;

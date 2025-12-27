@@ -8,7 +8,7 @@ dotenv.config();
 const upload = multer({
   storage: multerS3({
     s3,
-    bucket: process.env.AWS_BUCKET_NAME,
+    bucket: process.env.AWS_PRODUCT_BUCKET,
     // acl: "public-read", // or private if using signed URLs 
     metadata: (req, file, cb) => {
       cb(null, { fieldName: file.fieldname });

@@ -8,6 +8,13 @@ const userSchema = new mongoose.Schema(
 
     phone: { type: String, unique: true, sparse: true }, // Admin may not have phone
 
+    email: {
+      type: String,
+      lowercase: true,
+      trim: true,
+      sparse: true,   // allows multiple users with null email
+    },
+
     role: {
       type: String,
       enum: ["SUPERADMIN", "ADMIN", "RESTAURANT", "DRIVER"],
