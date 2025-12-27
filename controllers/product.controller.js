@@ -1,4 +1,5 @@
 import Product from "../models/Product.js";
+import AWS from "aws-sdk";
 
 
 // Admin controllers
@@ -8,12 +9,27 @@ export const createProduct = async (req, res) => {
   try {
     const { name, description, category, stock, status, varieties } = req.body;
 
-    // if (!name || !category)
-    //   return res.status(400).json({ message: "Name and Category are required" });
+    if (!name || !category)
+      return res.status(400).json({ message: "Name and Category are required" });
 
-    const parsedVarieties = varieties ? varieties : [];
+    // const parsedVarieties = varieties ? varieties : [];
 
-    // ✅ S3 uploaded image URLs
+    // IMPORTANT: parse varieties correctly
+    let parsedVarieties = [];
+
+    if (varieties) {
+      try {
+        parsedVarieties =
+          typeof varieties === "string" ? JSON.parse(varieties) : varieties;
+      } catch (err) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid varieties format. Must be valid JSON array.",
+        });
+      }
+    }
+
+    // S3 uploaded image URLs
     const imageUrls = req.files ? req.files.map((file) => file.location) : [];
 
     const product = await Product.create({
@@ -114,21 +130,21 @@ export const deleteProduct = async (req, res) => {
       return res.status(403).json({ message: "Access denied or product not found" });
     }
 
-    // const s3 = new AWS.S3();
+    const s3 = new AWS.S3();
 
-    // for (const imageUrl of product.images) {
-    //   if (!imageUrl) continue;
+    for (const imageUrl of product.images) {
+      if (!imageUrl) continue;
 
-    //   const key = imageUrl.split(".amazonaws.com/")[1];
-    //   if (!key) continue;
+      const key = imageUrl.split(".amazonaws.com/")[1];
+      if (!key) continue;
 
-    //   await s3
-    //     .deleteObject({
-    //       Bucket: process.env.AWS_BUCKET_NAME,
-    //       Key: key,
-    //     })
-    //     .promise();
-    // }
+      await s3
+        .deleteObject({
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: key,
+        })
+        .promise();
+    }
 
     await product.deleteOne();
 

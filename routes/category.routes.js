@@ -14,12 +14,13 @@ const router = express.Router();
 // for users 
 router.get("/menu", getMenu);
 router.get("/products/:categoryId", getProductsByCategory);
+router.get("/all", getAllCategories);
 
+// protected routes for admin
 router.use(protect);
 router.use(requireRole("ADMIN", "SUPERADMIN"));
 
 router.post("/create", createCategory);
-router.get("/all", getAllCategories);
 router.delete("/delete/:id", deleteCategory);
 
 export default router;
