@@ -140,7 +140,7 @@ export const deleteProduct = async (req, res) => {
 
       await s3
         .deleteObject({
-          Bucket: process.env.AWS_BUCKET_NAME,
+          Bucket: process.env.AWS_PRODUCT_BUCKET,
           Key: key,
         })
         .promise();
@@ -154,7 +154,6 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
-
 
 
 // Get Active Products (Public)

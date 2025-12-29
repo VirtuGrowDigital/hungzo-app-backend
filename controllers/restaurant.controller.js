@@ -93,10 +93,14 @@ export const updateRestaurantProfile = async (req, res) => {
     // Update restaurant fields
     if (ownerName) restaurant.ownerName = ownerName;
 
-    //  Update email in USER (THIS WAS MISSING)
-    if (email) {
+    //  Update email in USER 
+    // if (email) {
+    //   user.email = email.toLowerCase();
+    // }
+    if (typeof email === "string" && email.trim() !== "") {
       user.email = email.toLowerCase();
     }
+    
 
     // Update profile pic if uploaded
     if (req.file) {
@@ -122,7 +126,7 @@ export const updateRestaurantProfile = async (req, res) => {
       message: "Profile updated successfully",
       profile: {
         ownerName: restaurant.ownerName,
-        email: user.email,              // ✅ FROM USER
+        email: user.email,              // FROM USER
         profilePic: restaurant.profilePic,
       },
     });

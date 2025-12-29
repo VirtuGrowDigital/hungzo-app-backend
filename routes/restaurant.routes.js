@@ -16,7 +16,7 @@ import {
 
 import { protect, requireRole } from "../middlewares/jwtAuth.js";
 import restaurantProfileUpload from "../middlewares/restaurantProfileUpload.js";
-import { compressImage, memoryUpload } from "../middlewares/imageCompress.js";
+import { compressImage } from "../middlewares/imageCompress.js";
 
 
 const router = express.Router();
