@@ -50,7 +50,7 @@ export const registerRestaurant = async (req, res) => {
       gst,
       fssai,
       profilePic: profilePicUrl,
-      addresses: [JSON.parse(address)],
+      addresses: [address],
     });
 
     //  Link restaurant to user

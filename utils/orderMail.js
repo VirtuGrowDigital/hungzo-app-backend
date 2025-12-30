@@ -130,7 +130,6 @@ export const sendOrderPlacedMail = async (email, order) => {
 
 
 // send order status mail
-
 export const sendOrderStatusMail = async (email, order) => {
   const statusConfig = {
     Accepted: {

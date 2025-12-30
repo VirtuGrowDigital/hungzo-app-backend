@@ -1,13 +1,3 @@
-// import express from "express";
-// import { firebaseLogin } from "../controllers/auth.controller.js";
-
-// const router = express.Router();
-
-// router.post("/login", firebaseLogin);
-
-// export default router;
-
-
 import express from "express";
 import {
   firebaseLogin,

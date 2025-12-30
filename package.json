@@ -25,6 +25,7 @@
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^17.2.3",
     "expo": "^54.0.27",
     "express": "^5.2.1",
@@ -37,6 +38,7 @@
     "multer-s3": "^2.10.0",
     "nodemailer": "^7.0.12",
     "pdfkit": "^0.17.2",
+    "razorpay": "^2.9.6",
     "sharp": "^0.34.5"
   },
   "devDependencies": {

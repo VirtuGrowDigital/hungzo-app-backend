@@ -1,28 +1,3 @@
-// import Admin from "../models/Admin.js";
-// import bcrypt from "bcryptjs";
-// import jwt from "jsonwebtoken";
-
-
-// export const adminLogin = async (req, res) => {
-//   const { username, password } = req.body;
-
-//   const admin = await Admin.findOne({ username });
-//   if (!admin) return res.status(404).json({ message: "Admin not found" });
-
-//   const ok = await bcrypt.compare(password, admin.password);
-//   if (!ok) return res.status(403).json({ message: "Incorrect password" });
-
-//   const token = jwt.sign(
-//     { id: admin._id, role: admin.role },
-//     process.env.JWT_SECRET,
-//     { expiresIn: "2d" }
-//   );
-
-//   res.json({ token, role: admin.role });
-// };
-
-
-
 import Admin from "../models/Admin.js";
 import {
   generateAccessToken,
@@ -54,7 +29,7 @@ export const adminLogin = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials, Password do not matched" });
     }
 
-    // ✅ Both ADMIN and SUPERADMIN can login
+    //  Both ADMIN and SUPERADMIN can login
     const accessToken = generateAccessToken({
       _id: admin._id,
       role: admin.role,
@@ -87,7 +62,7 @@ export const adminLogin = async (req, res) => {
  */
 export const createAdmin = async (req, res) => {
   try {
-    // 🔐 Role check must be enforced by middleware
+    //  Role check must be enforced by middleware
     const { username, password, role } = req.body;
 
     if (!username || !password) {
@@ -165,7 +140,7 @@ export const deleteAdmin = async (req, res) => {
       });
     }
 
-    // 🚫 Prevent deleting yourself
+    // Prevent deleting yourself
     if (req.user.id === adminId) {
       return res.status(400).json({
         message: "You cannot delete yourself",

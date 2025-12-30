@@ -34,7 +34,7 @@ app.use("/restaurant", restaurantRoutes);
 app.use("/driver", driverRoutes);
 app.use("/admin/dashboard", adminDashboardRoutes);
 app.use("/admin", adminRoutes);
-app.use("/categories", categoriesRoutes)
+app.use("/categories", categoriesRoutes);
 app.use("/products", productRoutes);
 app.use("/cart", cartRoutes);
 app.use("/orders", orderRoutes);
