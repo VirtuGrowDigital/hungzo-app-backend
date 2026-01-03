@@ -1,0 +1,22 @@
+Online payment flow ->
+1. User chooses ONLINE payment
+2. Frontend calls /orders/place
+3. Backend:
+   - Creates Razorpay order
+   - Creates DB order (paymentStatus: pending)
+4. Backend returns razorpayOrderId + key
+5. Frontend opens Razorpay Checkout
+6. User completes payment (test card)
+7. Razorpay returns payment details - {
+  razorpay_order_id: "order_N9abcXYZ",
+  razorpay_payment_id: "pay_N9abc123",
+  razorpay_signature: "generated_signature"
+}
+
+8. Frontend calls /orders/verify-payment
+9. Backend verifies signature
+10. Backend:
+    - Marks order as PAID
+    - Clears cart
+    - Sends email
+----------------------------------------------

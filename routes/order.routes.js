@@ -5,6 +5,7 @@ import {
   getAdminOrders,
   getAllOrders,
   updateOrderStatus,
+  verifyOnlinePayment,
 } from "../controllers/order.controller.js";
 import { protect, requireRole } from "../middlewares/jwtAuth.js";
 
@@ -12,6 +13,7 @@ const router = express.Router();
 
 /* USER */
 router.post("/place", protect, placeOrder);
+router.post("/verify-payment", protect, verifyOnlinePayment);
 router.get("/my", protect, myOrders);
 
 /* ADMIN */
